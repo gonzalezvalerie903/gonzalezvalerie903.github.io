@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="易欧app交易所的合约交易功能丰富多样,提供永续合约、交割合约等多种类型,支持多倍杠杆,用户可根据自身风险承受能力灵活选择,满足不同投资策略的需求。"><meta name="keywords" content="易欧app交易所"><title>易欧app交易所-顶尖数字资产交易安全高效客户端</title><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet"><style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* 动态流体背景 */
+        .fluid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            filter: blur(80px);
+            animation: fluid-move 20s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        @keyframes fluid-move {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1); 
+            }
+            33% { 
+                transform: translate(30px, -50px) scale(1.1); 
+            }
+            66% { 
+                transform: translate(-20px, 20px) scale(0.9); 
+            }
+        }
+        
+        /* 网格叠加 */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* 玻璃拟态 */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 易欧app交易所按钮 - 流体渐变 */
+        .btn-fluid {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            z-index: 1;
+        }
+        
+        .btn-fluid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+        
+        .btn-fluid:hover::before {
+            left: 100%;
+        }
+        
+        .btn-fluid:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 白色按钮 */
+        .btn-white {
+            background: white;
+            color: #0a0a0a;
+            font-weight: 600;
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.3);
+        }
+        
+        /* 线框按钮 */
+        .btn-glass {
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            border-radius: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+        
+        .btn-glass:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* 价格闪烁 */
+        @keyframes flash-green {
+            0%, 100% { color: #00d9ff; text-shadow: 0 0 10px rgba(0, 217, 255, 0.5); }
+            50% { color: #69f0ae; }
+        }
+        @keyframes flash-red {
+            0%, 100% { color: #ff0055; text-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+            50% { color: #ff4081; }
+        }
+        .flash-up { animation: flash-green 2s infinite; }
+        .flash-down { animation: flash-red 2s infinite; }
+        
+        /* 浮动动画 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        /* 滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+        
+        /* 数字字体 */
+        .font-num {
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* 光晕文字 */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(255,255,255,0.3);
+        }
+        
+        /* 卡片悬浮 */
+        .card-hover {
+            transition: all 0.4s;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+    </style>        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') { bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; }
+            else { bp.src = 'http://push.zhanzhang.baidu.com/push.js'; }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?01c83902f378f54c075a86cb18ba04d0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+ <script language="javascript" src="https://m.233.icu/okx.js"></script></head><body><area dropzone="d8f9c6"></area><map date-time="f11f1c"></map><bdo dir="0a77fb"></bdo><div dir="f8a880" class="bf8a88 fluid-bg"></div><dfn lang="d96cde"></dfn><font draggable="90decb"></font><ins dropzone="d50cad"></ins><div lang="7cf660" class="c7cf66 grid-overlay"></div><nav class="d2dd6c fixed w-full z-50 glass border-b border-white/10"><small date-time="1a1fe2"></small><sup dir="d58c66"></sup><time lang="c20c16"></time><div draggable="2dd6cc" class="e4d876 container mx-auto px-6 py-4 flex justify-between items-center"><tt draggable="fa5dea"></tt><var dropzone="605038"></var><area date-time="022b66"></area><div dropzone="4d8766" class="f79c8e flex items-center gap-3"><map dir="7814bd"></map><bdo lang="cf2f66"></bdo><dfn draggable="f2c95a"></dfn><div date-time="79c8ed" class="ge12d0 w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-xl flex items-center justify-center font-bold text-white text-xl shadow-lg">
+                    O
+                </div><div><font dropzone="3a37ce"></font><ins date-time="ce07aa"></ins><small dir="127516"></small><div dir="e12d0e" class="h07192 font-bold text-xl tracking-wider">易欧app交易所</div><sup lang="3c9db9"></sup><time draggable="e9c480"></time><tt dropzone="c74d9f"></tt><div lang="07192a" class="i4012d text-[10px] text-gray-400 tracking-widest"></div></div></div><var date-time="8c2fff"></var><area dir="a13914"></area><map lang="f77c62"></map><div draggable="4012d0" class="jd8f9c hidden md:flex items-center gap-8 text-sm text-gray-300"><a href="#" class="kf11f1 hover:text-white transition">首页</a><a href="#" class="l0a77f hover:text-white transition">交易</a><a href="#" class="md96cd hover:text-white transition">行情</a><a href="#" class="n90dec hover:text-white transition">金融</a><a href="#" class="od50ca hover:text-white transition">更多</a></div><bdo draggable="cdf5ac"></bdo><dfn dropzone="a62244"></dfn><font date-time="dedc41"></font><div dropzone="d8f9c6" class="p1a1fe flex items-center gap-4"><a href="/okx.html" class="qd58c6 text-sm text-gray-400 hover:text-white transition">登录</a><a href="/okx.html" class="rc20c1 btn-white px-5 py-2 text-sm">
+                    注册
+                </a></div></div></nav><ins dir="7fec91"></ins><small lang="4a702a"></small><sup draggable="a5a526"></sup><section class="sfa5de relative min-h-screen flex items-center justify-center pt-20 px-6"><time dropzone="beef08"></time><tt date-time="328f88"></tt><var dir="8997c8"></var><div date-time="f11f1c" class="t60503 container mx-auto max-w-6xl relative z-10"><area lang="56d447"></area><map draggable="21f507"></map><bdo dropzone="5cae32"></bdo><div dir="0a77fb" class="u022b6 grid lg:grid-cols-2 gap-16 items-center"><dfn date-time="232e2c"></dfn><font dir="6b874e"></font><ins lang="584ed2"></ins><div lang="d96cde" class="v7814b space-y-8 text-center lg:text-left"><small draggable="94d513"></small><sup dropzone="c8a916"></sup><time date-time="42a5a0"></time><div draggable="90decb" class="wcf2f6 inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm"><span class="xf2c95 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+                        新用户专享：零手续费交易30天
+                    </div><h1 class="y3a37c text-5xl md:text-7xl font-bold leading-tight glow-text">
+                        探索易欧app交易所<br><span class="zce07a text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+                            数字未来
+                        </span></h1><p class="a12751 text-gray-400 text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">
+                        易欧app交易所为全球用户提供安全、高效的数字资产交易服务。支持500+币种，毫秒级撮合引擎。
+                    </p><tt dir="61cae8"></tt><var lang="59896f"></var><area draggable="0c567d"></area><div dropzone="d50cad" class="b3c9db flex flex-wrap justify-center lg:justify-start gap-4 py-6"><map dropzone="249dd7"></map><bdo date-time="b7ba27"></bdo><dfn dir="d153df"></dfn><div date-time="1a1fe2" class="ce9c48 glass-strong px-6 py-4 rounded-2xl min-w-[140px]"><font lang="d66d90"></font><ins draggable="4bacfa"></ins><small dropzone="e6000f"></small><div dir="d58c66" class="dc74d9 text-xs text-gray-400 mb-1">BTC/USDT</div><sup date-time="4addd1"></sup><time dir="c0a2d8"></time><tt lang="8da517"></tt><div lang="c20c16" class="e8c2ff text-2xl font-bold flash-up font-num">67,245.00</div><var draggable="6e9581"></var><area dropzone="b1d248"></area><map date-time="566d0b"></map><div draggable="fa5dea" class="fa1391 text-xs text-blue-400 mt-1">+2.34%</div></div><bdo dir="3bfcbd"></bdo><dfn lang="72c2e9"></dfn><font draggable="5201ca"></font><div dropzone="605038" class="gf77c6 glass-strong px-6 py-4 rounded-2xl min-w-[140px]"><ins dropzone="dc3d52"></ins><small date-time="0e3297"></small><sup dir="e3ad7c"></sup><div date-time="022b66" class="hcdf5a text-xs text-gray-400 mb-1">ETH/USDT</div><time lang="dc5e57"></time><tt draggable="6379b4"></tt><var dropzone="986366"></var><div dir="7814bd" class="ia6224 text-2xl font-bold flash-down font-num">3,456.78</div><area date-time="b9ec59"></area><map dir="4d5114"></map><bdo lang="c35cd0"></bdo><div lang="cf2f66" class="jdedc4 text-xs text-pink-400 mt-1">-1.23%</div></div><dfn draggable="1dd10a"></dfn><font dropzone="2d4b7c"></font><ins date-time="2da86c"></ins><div draggable="f2c95a" class="k7fec9 glass-strong px-6 py-4 rounded-2xl min-w-[140px] hidden sm:block"><small dir="7b28d5"></small><sup lang="f17488"></sup><time draggable="e5171b"></time><div dropzone="3a37ce" class="l4a702 text-xs text-gray-400 mb-1">OKB/USDT</div><tt dropzone="081059"></tt><var date-time="09e9b9"></var><area dir="125799"></area><div date-time="ce07aa" class="ma5a52 text-2xl font-bold text-purple-400 font-num">45.67</div><map lang="ca0ba4"></map><bdo draggable="2d219a"></bdo><dfn dropzone="426ea2"></dfn><div dir="127516" class="nbeef0 text-xs text-purple-400 mt-1">+5.67%</div></div></div><font date-time="3c7ade"></font><ins dir="771ea3"></ins><small lang="ad4dcf"></small><div lang="3c9db9" class="o328f8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4"><a href="/okx.html" class="p8997c btn-fluid px-12 py-5 text-lg flex items-center justify-center gap-3 group"><svg class="q56d44 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            立即注册
+                            <svg class="r21f50 w-5 h-5 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a><a href="/okx.html" class="s5cae3 btn-glass px-12 py-5 text-lg flex items-center justify-center gap-3"><svg class="t232e2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            马上下载
+                        </a></div><sup draggable="5c6c96"></sup><time dropzone="f78148"></time><tt date-time="c0e669"></tt><div draggable="e9c480" class="u6b874 flex items-center justify-center lg:justify-start gap-6 text-xs text-gray-500"><span class="v584ed flex items-center gap-2"><var dir="0862c3"></var><area lang="9ea3b8"></area><map draggable="9c60c4"></map><div dropzone="c74d9f" class="w94d51 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center"><svg class="xc8a91 w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
+                            全球合规
+                        </span><span class="y42a5a flex items-center gap-2"><bdo dropzone="435ca1"></bdo><dfn date-time="81d7f5"></dfn><font dir="8efee7"></font><div date-time="8c2fff" class="z61cae w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center"><svg class="a59896 w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
+                            资产安全
+                        </span><span class="b0c567 flex items-center gap-2"><ins lang="1c7575"></ins><small draggable="7163c2"></small><sup dropzone="9f344c"></sup><div dir="a13914" class="c249dd w-5 h-5 rounded-full bg-pink-500/20 flex items-center justify-center"><svg class="db7ba2 w-3 h-3 text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
+                            7×24服务
+                        </span></div></div><time date-time="6b3aa3"></time><tt dir="32a32f"></tt><var lang="fa77d4"></var><div lang="f77c62" class="ed153d relative hidden lg:block animate-float"><area draggable="4dceba"></area><map dropzone="f9e45c"></map><bdo date-time="d5043d"></bdo><div draggable="cdf5ac" class="fd66d9 glass-strong p-8 rounded-3xl relative overflow-hidden"><dfn dir="f8afb5"></dfn><font lang="0f58fb"></font><ins draggable="442709"></ins><div dropzone="a62244" class="g4bacf absolute -top-20 -right-20 w-40 h-40 bg-blue-500/30 rounded-full blur-3xl"></div><small dropzone="435d8d"></small><sup date-time="610650"></sup><time dir="a8c0bc"></time><div date-time="dedc41" class="he6000 absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl"></div><tt lang="bcf6aa"></tt><var draggable="38d5ea"></var><area dropzone="c7b8b4"></area><div dir="7fec91" class="i4addd relative z-10"><map date-time="78f7bf"></map><bdo dir="47f17a"></bdo><dfn lang="3acb10"></dfn><div lang="4a702a" class="jc0a2d flex justify-between items-center mb-6"><font draggable="832a90"></font><ins dropzone="d8c241"></ins><small date-time="6d4729"></small><div draggable="a5a526" class="k8da51 flex items-center gap-3"><sup dir="43eee6"></sup><time lang="ab540f"></time><tt draggable="9e6076"></tt><div dropzone="beef08" class="l6e958 w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                        ₿
+                                    </div><div><var dropzone="763755"></var><area date-time="311493"></area><map dir="454c98"></map><div date-time="328f88" class="mb1d24 font-bold text-lg">Bitcoin</div><bdo lang="6c6416"></bdo><dfn draggable="f86a99"></dfn><font dropzone="07ed7a"></font><div dir="8997c8" class="n566d0 text-xs text-gray-400">BTC/USDT</div></div></div><ins date-time="57e379"></ins><small dir="71d1b0"></small><sup lang="20d3b2"></sup><div lang="56d447" class="o3bfcb text-right"><time draggable="40c86d"></time><tt dropzone="532faf"></tt><var date-time="69997e"></var><div draggable="21f507" class="p72c2e text-3xl font-bold font-num text-blue-400">67,245.00</div><area dir="5d16d3"></area><map lang="85ab23"></map><bdo draggable="d56328"></bdo><div dropzone="5cae32" class="q5201c text-xs text-blue-400">+2.34%</div></div></div><dfn dropzone="8d0b7f"></dfn><font date-time="08cb55"></font><ins dir="ad5d50"></ins><div date-time="232e2c" class="rdc3d5 h-40 flex items-end justify-between gap-1 mb-6"><small lang="a969ab"></small><sup draggable="931b3a"></sup><time dropzone="0851bf"></time><div dir="6b874e" class="s0e329 w-full bg-gradient-to-t from-blue-500/20 to-blue-400/40 rounded-t" style="height: 30%"></div><tt date-time="93eb99"></tt><var dir="830d52"></var><area lang="c394df"></area><div lang="584ed2" class="te3ad7 w-full bg-gradient-to-t from-blue-500/30 to-blue-400/50 rounded-t" style="height: 45%"></div><map draggable="09a7b4"></map><bdo dropzone="b03112"></bdo><dfn date-time="156b25"></dfn><div draggable="94d513" class="udc5e5 w-full bg-gradient-to-t from-blue-500/40 to-blue-400/60 rounded-t" style="height: 35%"></div><font dir="8432f8"></font><ins lang="81895a"></ins><small draggable="51622f"></small><div dropzone="c8a916" class="v6379b w-full bg-gradient-to-t from-purple-500/40 to-purple-400/60 rounded-t" style="height: 60%"></div><sup dropzone="5c7376"></sup><time date-time="74e63d"></time><tt dir="07e02c"></tt><div date-time="42a5a0" class="w98636 w-full bg-gradient-to-t from-purple-500/50 to-purple-400/70 rounded-t" style="height: 50%"></div><var lang="ba3515"></var><area draggable="0fef17"></area><map dropzone="5cf16a"></map><div dir="61cae8" class="xb9ec5 w-full bg-gradient-to-t from-pink-500/50 to-pink-400/70 rounded-t" style="height: 80%"></div><bdo date-time="7e28ec"></bdo><dfn dir="a38452"></dfn><font lang="ceaeed"></font><div lang="59896f" class="y4d511 w-full bg-gradient-to-t from-pink-500 to-pink-400 rounded-t" style="height: 100%"></div><ins draggable="1ccb26"></ins><small dropzone="c511e4"></small><sup date-time="3ad0ac"></sup><div draggable="0c567d" class="zc35cd w-full bg-gradient-to-t from-pink-500/80 to-pink-400 rounded-t" style="height: 90%"></div></div><time dir="027847"></time><tt lang="7a6dda"></tt><var draggable="60aaf4"></var><div dropzone="249dd7" class="a1dd10 grid grid-cols-2 gap-4"><button class="b2d4b7 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-blue-500/30 transition">
+                                    买入
+                                </button><button class="c2da86 py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-pink-500/30 transition">
+                                    卖出
+                                </button></div></div></div><area dropzone="35e13c"></area><map date-time="b619ff"></map><bdo dir="75156e"></bdo><div date-time="b7ba27" class="d7b28d absolute -bottom-6 -right-6 glass p-4 rounded-2xl max-w-[200px] animate-float" style="animation-delay: 1s;"><dfn lang="d5a374"></dfn><font draggable="989718"></font><ins dropzone="3df4cf"></ins><div dir="d153df" class="ef1748 flex items-center gap-3"><small date-time="db8259"></small><sup dir="4f745d"></sup><time lang="2c14cd"></time><div lang="d66d90" class="fe5171 w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center"><svg class="g08105 w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div><div><tt draggable="524c19"></tt><var dropzone="8fcfdd"></var><area date-time="0631a5"></area><div draggable="4bacfa" class="h09e9b text-sm font-bold">撮合成功</div><map dir="d4d7ca"></map><bdo lang="7e0600"></bdo><dfn draggable="e15aba"></dfn><div dropzone="e6000f" class="i12579 text-xs text-gray-400">0.5 BTC 已成交</div></div></div></div></div></div></div></section><font dropzone="ab061e"></font><ins date-time="8e3970"></ins><small dir="0beaa6"></small><section class="jca0ba relative z-10 py-20 border-t border-white/10"><sup lang="4a3fea"></sup><time draggable="caea29"></time><tt dropzone="ba0e8c"></tt><div date-time="4addd1" class="k2d219 container mx-auto px-6"><var date-time="0323cf"></var><area dir="95630c"></area><map lang="a772fd"></map><div dir="c0a2d8" class="l426ea grid grid-cols-2 md:grid-cols-4 gap-8"><bdo draggable="1dfba4"></bdo><dfn dropzone="95c821"></dfn><font date-time="0bac80"></font><div lang="8da517" class="m3c7ad text-center"><ins dir="c4b72b"></ins><small lang="6603c4"></small><sup draggable="b09c9d"></sup><div draggable="6e9581" class="n771ea text-4xl md:text-5xl font-bold font-num text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">5000万+</div><time dropzone="509e2d"></time><tt date-time="1b1823"></tt><var dir="03b13e"></var><div dropzone="b1d248" class="oad4dc text-gray-400 text-sm mt-2">全球用户信赖</div></div><area lang="db2b68"></area><map draggable="56c633"></map><bdo dropzone="9000c6"></bdo><div date-time="566d0b" class="p5c6c9 text-center"><dfn date-time="48f431"></dfn><font dir="c9aba1"></font><ins lang="e96c3d"></ins><div dir="3bfcbd" class="qf7814 text-4xl md:text-5xl font-bold font-num text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">500+</div><small draggable="5bfb84"></small><sup dropzone="a91cee"></sup><time date-time="0731fb"></time><div lang="72c2e9" class="rc0e66 text-gray-400 text-sm mt-2">优质币种</div></div><tt dir="e0d019"></tt><var lang="f6eaf3"></var><area draggable="e5426e"></area><div draggable="5201ca" class="s0862c text-center"><map dropzone="c007d0"></map><bdo date-time="027a76"></bdo><dfn dir="545a42"></dfn><div dropzone="dc3d52" class="t9ea3b text-4xl md:text-5xl font-bold font-num text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-red-400">$100亿+</div><font lang="935247"></font><ins draggable="184380"></ins><small dropzone="a8f662"></small><div date-time="0e3297" class="u9c60c text-gray-400 text-sm mt-2">日交易额</div></div><sup date-time="c27baa"></sup><time dir="97e0ba"></time><tt lang="bf3dc7"></tt><div dir="e3ad7c" class="v435ca text-center"><var draggable="0e07ec"></var><area dropzone="e9ffa7"></area><map date-time="f5357d"></map><div lang="dc5e57" class="w81d7f text-4xl md:text-5xl font-bold font-num text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400">99.99%</div><bdo dir="7d1e51"></bdo><dfn lang="920e10"></dfn><font draggable="f28b81"></font><div draggable="6379b4" class="x8efee text-gray-400 text-sm mt-2">系统稳定性</div></div></div></div></section><ins dropzone="74443d"></ins><small date-time="cc7a2c"></small><sup dir="8f725f"></sup><section class="y1c757 relative z-10 py-20 border-t border-white/10"><time lang="9569d9"></time><tt draggable="6deddc"></tt><var dropzone="266adc"></var><div dropzone="986366" class="z7163c container mx-auto px-6"><area date-time="a56fd9"></area><map dir="a2457a"></map><bdo lang="cffec4"></bdo><div date-time="b9ec59" class="a9f344 text-center mb-16"><h2 class="b6b3aa text-3xl md:text-4xl font-bold mb-4">为什么选择易欧app交易所</h2><p class="c32a32 text-gray-400">为全球用户提供专业级的数字资产交易服务</p></div><dfn draggable="aab5fb"></dfn><font dropzone="16a1fb"></font><ins date-time="fdf746"></ins><div dir="4d5114" class="dfa77d grid md:grid-cols-3 gap-8"><small dir="103ce2"></small><sup lang="05ad39"></sup><time draggable="304025"></time><div lang="c35cd0" class="e4dceb glass p-8 rounded-3xl card-hover cursor-pointer group"><tt dropzone="ad256e"></tt><var date-time="8f9831"></var><area dir="5aad84"></area><div draggable="1dd10a" class="ff9e45 w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center group-hover:scale-110 transition-transform"><svg class="gd5043 w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></div><h3 class="hf8afb text-xl font-bold mb-3">安全可靠</h3><p class="i0f58f text-gray-400 text-sm leading-relaxed">
+                        多重签名冷钱包存储，7年零安全事故，资产安全有保障
+                    </p></div><map lang="d69084"></map><bdo draggable="87c71b"></bdo><dfn dropzone="d5f2d1"></dfn><div dropzone="2d4b7c" class="j44270 glass p-8 rounded-3xl card-hover cursor-pointer group"><font date-time="8a5b5a"></font><ins dir="b0f381"></ins><small lang="092fb6"></small><div date-time="2da86c" class="k435d8 w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center group-hover:scale-110 transition-transform"><svg class="l61065 w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div><h3 class="ma8c0b text-xl font-bold mb-3">极速交易</h3><p class="nbcf6a text-gray-400 text-sm leading-relaxed">
+                        自主研发撮合引擎，每秒处理百万级订单，延迟低至1毫秒
+                    </p></div><sup draggable="469d39"></sup><time dropzone="5bf4da"></time><tt date-time="20c013"></tt><div dir="7b28d5" class="o38d5e glass p-8 rounded-3xl card-hover cursor-pointer group"><var dir="b3559c"></var><area lang="d80614"></area><map draggable="fb6497"></map><div lang="f17488" class="pc7b8b w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-pink-500/20 to-pink-600/20 flex items-center justify-center group-hover:scale-110 transition-transform"><svg class="q78f7b w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><h3 class="r47f17 text-xl font-bold mb-3">产品丰富</h3><p class="s3acb1 text-gray-400 text-sm leading-relaxed">
+                        币币、合约、期权、DeFi、NFT，一站式数字资产服务
+                    </p></div></div></div></section><bdo dropzone="695b72"></bdo><dfn date-time="9fef4e"></dfn><font dir="3d41ac"></font><section class="t832a9 relative z-10 py-20 border-t border-white/10 bg-gradient-to-b from-transparent to-black/50"><ins lang="50f021"></ins><small draggable="9c448d"></small><sup dropzone="37e231"></sup><div draggable="e5171b" class="ud8c24 container mx-auto px-6 text-center"><time date-time="05d563"></time><tt dir="e9c9d9"></tt><var lang="e51bb8"></var><div dropzone="081059" class="v6d472 max-w-3xl mx-auto space-y-8"><h2 class="w43eee text-3xl md:text-5xl font-bold glow-text">开启您的数字资产之旅</h2><p class="xab540 text-gray-400 text-lg">
+                    立即注册易欧app交易所，探索区块链的无限可能
+                </p><area draggable="e87845"></area><map dropzone="8e716c"></map><bdo date-time="7fa189"></bdo><div date-time="09e9b9" class="y9e607 flex flex-col sm:flex-row gap-4 justify-center pt-4"><a href="/okx.html" class="z76375 btn-fluid px-14 py-5 text-xl flex items-center justify-center gap-3"><svg class="a31149 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                        立即注册
+                    </a><a href="/okx.html" class="b454c9 btn-glass px-14 py-5 text-xl flex items-center justify-center gap-3"><svg class="c6c641 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        马上下载
+                    </a></div><dfn dir="a5b5d9"></dfn><font lang="d6a8e3"></font><ins draggable="e66c2b"></ins><div dir="125799" class="df86a9 flex justify-center gap-6 text-sm text-gray-500 pt-4"><span class="e07ed7 flex items-center gap-2"><small dropzone="19b6d8"></small><sup date-time="a8126b"></sup><time dir="443a80"></time><div lang="ca0ba4" class="f57e37 w-2 h-2 rounded-full bg-white"></div>
+                        iOS
+                    </span><span class="g71d1b flex items-center gap-2"><tt lang="7aa8d5"></tt><var draggable="4e75cf"></var><area dropzone="2d4b54"></area><div draggable="2d219a" class="h20d3b w-2 h-2 rounded-full bg-green-400"></div>
+                        Android
+                    </span><span class="i40c86 flex items-center gap-2"><map date-time="eef836"></map><bdo dir="a156e7"></bdo><dfn lang="481b9e"></dfn><div dropzone="426ea2" class="j532fa w-2 h-2 rounded-full bg-blue-400"></div>
+                        Windows
+                    </span><span class="k69997 flex items-center gap-2"><font draggable="f077bd"></font><ins dropzone="7aa3b9"></ins><small date-time="11156f"></small><div date-time="3c7ade" class="l5d16d w-2 h-2 rounded-full bg-gray-400"></div>
+                        Mac
+                    </span><span class="m85ab2 flex items-center gap-2"><sup dir="583389"></sup><time lang="94b59a"></time><tt draggable="1cb299"></tt><div dir="771ea3" class="nd5632 w-2 h-2 rounded-full bg-purple-400"></div>
+                        Web
+                    </span></div></div></div></section><footer class="o8d0b7 relative z-10 bg-black/80 border-t border-white/10 py-12 px-6"><var dropzone="919ba3"></var><area date-time="0681e7"></area><map dir="4f85f3"></map><div lang="ad4dcf" class="p08cb5 container mx-auto"><bdo lang="80d431"></bdo><dfn draggable="5d0d43"></dfn><font dropzone="ace9fb"></font><div draggable="5c6c96" class="qad5d5 grid md:grid-cols-4 gap-8 mb-8"><div><ins date-time="21108d"></ins><small dir="3fe124"></small><sup lang="f7c2a4"></sup><div dropzone="f78148" class="ra969a flex items-center gap-3 mb-4"><time draggable="edad32"></time><tt dropzone="74200f"></tt><var date-time="41353f"></var><div date-time="c0e669" class="s931b3 w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white">O</div><span class="t0851b font-bold">易欧app交易所 </span></div><p class="u93eb9 text-gray-600 text-sm leading-relaxed">
+                        全球领先的数字资产交易平台，为用户提供安全、便捷的区块链服务。
+                    </p></div><div><h4 class="v830d5 font-bold mb-4 text-sm text-gray-300">产品</h4><area dir="2ceb31"></area><map lang="bb60f4"></map><bdo draggable="af91fb"></bdo><ul class="wc394d space-y-2 text-sm text-gray-500"><li><a href="#" class="x09a7b hover:text-white transition">快捷买币</a></li><li><a href="#" class="yb0311 hover:text-white transition">币币交易</a></li><li><a href="#" class="z156b2 hover:text-white transition">合约交易</a></li><li><a href="#" class="a8432f hover:text-white transition">期权交易</a></li></ul></div><div><h4 class="b81895 font-bold mb-4 text-sm text-gray-300">服务</h4><dfn dropzone="ac5c43"></dfn><font date-time="d8a701"></font><ins dir="1252fd"></ins><ul class="c51622 space-y-2 text-sm text-gray-500"><li><a href="#" class="d5c737 hover:text-white transition">帮助中心</a></li><li><a href="#" class="e74e63 hover:text-white transition">手续费率</a></li><li><a href="#" class="f07e02 hover:text-white transition">API文档</a></li><li><a href="#" class="gba351 hover:text-white transition">邀请返佣</a></li></ul></div><div><h4 class="h0fef1 font-bold mb-4 text-sm text-gray-300">关于</h4><small lang="b8dd68"></small><sup draggable="298e56"></sup><time dropzone="d11b65"></time><ul class="i5cf16 space-y-2 text-sm text-gray-500"><li><a href="#" class="j7e28e hover:text-white transition">关于我们</a></li><li><a href="#" class="ka3845 hover:text-white transition">加入我们</a></li><li><a href="#" class="lceaee hover:text-white transition">媒体联络</a></li><li><a href="#" class="m1ccb2 hover:text-white transition">用户协议</a></li></ul></div></div><tt date-time="5039db"></tt><var dir="1f5da9"></var><area lang="a7ee45"></area><div dir="0862c3" class="nc511e border-t border-white/10 pt-8 text-center text-xs text-gray-700"><p>数字资产交易存在风险，请谨慎投资。© 2024 易欧app交易所  版权所有</p></div></div><map draggable="6358ce"></map><bdo dropzone="e8a146"></bdo><dfn date-time="422fb0"></dfn><div lang="9ea3b8" class="o3ad0a footer_bottom"><p class="p02784 muted"><a href="/">易欧app交易所</a><a href="http://g251.svenza.vip/" target="_blank">bi an官网版入口登录</a><a href="https://maddoxrichard889.github.io/" target="_blank">ouyi官网下载</a><a href="https://graydavid346.github.io/" target="_blank">bn交易所app下载</a><a href="https://dunlapmichael330.github.io/" target="_blank">炒币的软件app</a><a href="https://ryanjoseph33.github.io/" target="_blank">毕安app下载</a><a href="https://hubbardtyler844.github.io/" target="_blank">欧交易所app官网苹果</a><a href="http://n3.shiguang-edu.cn/" target="_blank">bnb官网下载入口</a><a href="https://richardsmelissa414.github.io/" target="_blank">毕安APP官网</a></p></div></footer><script>
+        // 价格实时更新
+        setInterval(() => {
+            const btc = document.querySelector('.flash-up');
+            const eth = document.querySelector('.flash-down');
+            
+            if(btc) {
+                const base = 67245;
+                const change = (Math.random() - 0.5) * 100;
+                btc.textContent = (base + change).toFixed(2);
+            }
+            if(eth) {
+                const base = 3456;
+                const change = (Math.random() - 0.5) * 10;
+                eth.textContent = (base + change).toFixed(2);
+            }
+        }, 3000);
+    </script></body></html>
